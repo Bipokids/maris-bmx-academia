@@ -13,17 +13,11 @@
   --red-soft: rgba(227, 36, 36, 0.18);
   --line: rgba(255, 255, 255, 0.13);
   --shadow: rgba(0, 0, 0, 0.48);
-
   font-family: 'Rajdhani', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -62,16 +56,8 @@ body::after {
     linear-gradient(115deg, transparent 0%, transparent 58%, rgba(255, 255, 255, 0.045) 58.2%, transparent 59%);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-main {
-  overflow: hidden;
-}
-
-/* NAV */
+a { color: inherit; text-decoration: none; }
+main { overflow: hidden; }
 
 .nav {
   width: min(1180px, calc(100% - 32px));
@@ -141,15 +127,8 @@ main {
   transition: width 0.2s ease;
 }
 
-.navLinks a:hover {
-  color: #ffffff;
-}
-
-.navLinks a:hover::after {
-  width: 100%;
-}
-
-/* HERO */
+.navLinks a:hover { color: #ffffff; }
+.navLinks a:hover::after { width: 100%; }
 
 .hero {
   width: min(1180px, calc(100% - 32px));
@@ -167,9 +146,9 @@ main {
 .inscription h2 {
   margin: 0;
   font-family: 'Black Ops One', system-ui;
-  line-height: 1.02;
+  line-height: 1.03;
   letter-spacing: 0.01em;
-  text-transform: uppercase;
+  text-transform: lowercase;
 }
 
 .heroCopy h1 {
@@ -181,9 +160,7 @@ main {
     0 0 38px rgba(227, 36, 36, 0.22);
 }
 
-.heroCopy h1::first-letter {
-  color: #ffffff;
-}
+.textRed { color: var(--red); }
 
 .eyebrow,
 .sectionTag {
@@ -232,16 +209,11 @@ main {
   text-transform: lowercase;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-}
+.btn:hover { transform: translateY(-2px); }
+.btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
 .btn.primary {
   background: var(--red);
@@ -269,11 +241,7 @@ main {
   background: rgba(227, 36, 36, 0.10);
 }
 
-.btn.full {
-  width: 100%;
-  border: 0;
-  font-size: 1rem;
-}
+.btn.full { width: 100%; border: 0; font-size: 1rem; }
 
 .heroCard {
   position: relative;
@@ -321,8 +289,19 @@ main {
   filter: saturate(0.96) contrast(1.1);
 }
 
-.heroImage::after {
-  content: none;
+.heroImage::after { content: none; }
+
+.floatingBadge {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Black Ops One', system-ui;
+  text-transform: lowercase;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.34);
+  backdrop-filter: blur(8px);
 }
 
 .heroSlots {
@@ -343,129 +322,6 @@ main {
     0 0 22px rgba(227, 36, 36, 0.14);
 }
 
-.pilotHighlight {
-  max-width: 1040px;
-  margin: 0 auto;
-  display: grid;
-  gap: 18px;
-}
-
-.pilotNameBox {
-  padding: 26px 28px 24px;
-  border-radius: 30px;
-  background:
-    linear-gradient(135deg, #e32424 0%, #b11515 100%);
-  border: 1px solid rgba(255,255,255,0.14);
-  box-shadow:
-    0 24px 60px rgba(0,0,0,0.26),
-    0 0 28px rgba(227, 36, 36, 0.18);
-}
-
-.pilotNameBox h2 {
-  margin: 0;
-  color: #ffffff;
-}
-
-.pilotNameBox p {
-  margin: 16px 0 0;
-  color: rgba(255,255,255,0.9);
-  font-size: 1.22rem;
-  font-weight: 600;
-  line-height: 1.45;
-}
-
-.pilotSecondPhoto {
-  overflow: hidden;
-  border-radius: 30px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background:
-    linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-  box-shadow: 0 24px 60px rgba(0,0,0,0.22);
-}
-
-.pilotSecondPhoto img {
-  display: block;
-  width: 100%;
-  height: 430px;
-  object-fit: cover;
-  object-position: center top;
-}
-
-@media (max-width: 920px) {
-  .heroSlots {
-    left: 20px;
-    bottom: 20px;
-    padding: 16px 24px;
-    font-size: 1.15rem;
-  }
-
-  .pilotSecondPhoto img {
-    height: 360px;
-  }
-}
-
-@media (max-width: 620px) {
-  .heroSlots {
-    left: 16px;
-    bottom: 16px;
-    padding: 14px 18px;
-    font-size: 0.96rem;
-  }
-
-  .pilotNameBox {
-    padding: 22px 20px;
-    border-radius: 24px;
-  }
-
-  .pilotNameBox p {
-    font-size: 1.05rem;
-  }
-
-  .pilotSecondPhoto img {
-    height: 260px;
-  }
-}
-
-.floatingBadge {
-  position: absolute;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-family: 'Black Ops One', system-ui;
-  text-transform: lowercase;
-  box-shadow: 0 18px 44px rgba(0,0,0,0.34);
-  transform: rotate(-3deg);
-  backdrop-filter: blur(8px);
-}
-
-.floatingBadge.top {
-  top: 20px;
-  right: 20px;
-  padding: 18px 26px;
-  border-radius: 18px;
-  background: #ffffff;
-  color: var(--red);
-  border: 2px solid var(--red);
-  font-size: 1.1rem;
-  letter-spacing: 0.01em;
-}
-
-.floatingBadge.bottom {
-  right: 24px;
-  bottom: 96px;
-  padding: 15px 22px;
-  border-radius: 999px;
-  background: var(--red);
-  color: #ffffff;
-  font-size: 0.98rem;
-  max-width: 250px;
-  transform: rotate(-2deg);
-}
-
-/* SECCIONES */
-
 .titleBlock,
 .experience,
 .program,
@@ -477,13 +333,94 @@ main {
 }
 
 .titleBlock {
+  width: min(1280px, calc(100% - 32px));
   padding: 78px 0 56px;
-  text-align: center;
+  text-align: left;
 }
 
-.titleBlock h2 {
-  font-size: clamp(2.5rem, 6.5vw, 6.6rem);
+.titleBlock > .sectionTag {
+  margin-left: calc((100% - min(1180px, 100%)) / 2);
 }
+
+.pilotHighlight {
+  position: relative;
+  width: 100%;
+  min-height: 430px;
+  display: grid;
+  grid-template-columns: 1fr minmax(340px, 0.78fr);
+  align-items: stretch;
+  gap: 24px;
+  padding: 34px;
+  border-radius: 38px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.2), transparent 18rem),
+    linear-gradient(135deg, #e32424 0%, #b11515 58%, #7e0b0b 100%);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.32),
+    0 0 40px rgba(227,36,36,0.22);
+}
+
+.pilotHighlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 0%, transparent 46%, rgba(255,255,255,0.13) 46.2%, transparent 47.4%),
+    linear-gradient(115deg, transparent 0%, transparent 62%, rgba(0,0,0,0.14) 62.2%, transparent 63.4%);
+  pointer-events: none;
+}
+
+.pilotText {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 18px 0 18px 8px;
+}
+
+.pilotText h2 {
+  font-size: clamp(3rem, 7.4vw, 7.2rem);
+  color: #ffffff;
+  max-width: 760px;
+  text-shadow:
+    0 6px 0 rgba(0,0,0,0.36),
+    0 0 30px rgba(255,255,255,0.16);
+}
+
+.pilotText p {
+  max-width: 620px;
+  margin: 18px 0 0;
+  color: rgba(255,255,255,0.9);
+  font-size: 1.28rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.pilotSecondPhoto {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 28px;
+  min-height: 360px;
+  border: 1px solid rgba(255,255,255,0.24);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.24);
+}
+
+.pilotSecondPhoto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.titleBlock h2 { font-size: clamp(2.5rem, 6.5vw, 6.6rem); }
 
 .titleBlock h2,
 .experience h2,
@@ -493,14 +430,6 @@ main {
   text-shadow:
     0 5px 0 rgba(0,0,0,0.5),
     0 0 32px rgba(227, 36, 36, 0.16);
-}
-
-.titleBlock p:not(.sectionTag) {
-  max-width: 760px;
-  margin: 18px auto 0;
-  color: var(--muted);
-  font-size: 1.3rem;
-  font-weight: 600;
 }
 
 .experience {
@@ -533,9 +462,7 @@ main {
 
 .experience h2,
 .program h2,
-.inscription h2 {
-  font-size: clamp(2.2rem, 5.1vw, 5.2rem);
-}
+.inscription h2 { font-size: clamp(2.2rem, 5.1vw, 5.2rem); }
 
 .experience p:last-child {
   position: relative;
@@ -545,8 +472,6 @@ main {
   line-height: 1.5;
   font-weight: 600;
 }
-
-/* PILARES */
 
 .pillars {
   display: grid;
@@ -568,12 +493,16 @@ main {
   box-shadow: 0 22px 64px rgba(0,0,0,0.22);
 }
 
-.pillar {
+.pillar,
+.stats article {
   position: relative;
+  overflow: hidden;
+}
+
+.pillar {
   min-height: 250px;
   padding: 24px;
   border-radius: 26px;
-  overflow: hidden;
 }
 
 .pillar::before,
@@ -627,8 +556,6 @@ footer span {
   font-weight: 600;
 }
 
-/* STATS */
-
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -637,10 +564,8 @@ footer span {
 }
 
 .stats article {
-  position: relative;
   padding: 26px;
   border-radius: 26px;
-  overflow: hidden;
 }
 
 .stats h3 {
@@ -654,11 +579,7 @@ footer span {
   color: #ffffff;
 }
 
-.stats p {
-  margin: 0;
-}
-
-/* ICONOS MODERNOS */
+.stats p { margin: 0; }
 
 .modernIcon,
 .statIcon {
@@ -688,14 +609,7 @@ footer span {
   content: '';
   position: absolute;
   inset: -45%;
-  background: conic-gradient(
-    from 180deg,
-    transparent,
-    rgba(255,255,255,0.7),
-    transparent,
-    rgba(227,36,36,0.85),
-    transparent
-  );
+  background: conic-gradient(from 180deg, transparent, rgba(255,255,255,0.7), transparent, rgba(227,36,36,0.85), transparent);
   opacity: 0.34;
   animation: iconSpin 6s linear infinite;
 }
@@ -706,8 +620,7 @@ footer span {
   position: absolute;
   inset: 2px;
   border-radius: 20px;
-  background:
-    linear-gradient(135deg, rgba(30, 30, 30, 0.84), rgba(120, 6, 6, 0.72));
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.84), rgba(120, 6, 6, 0.72));
 }
 
 .modernIcon svg,
@@ -727,9 +640,7 @@ footer span {
   stroke-linejoin: round;
 }
 
-.iconDot {
-  fill: currentColor;
-}
+.iconDot { fill: currentColor; }
 
 .modernIcon.yellow,
 .modernIcon.green,
@@ -737,9 +648,7 @@ footer span {
 .modernIcon.red,
 .statIcon.yellow,
 .statIcon.cyan,
-.statIcon.red {
-  color: #ffffff;
-}
+.statIcon.red { color: #ffffff; }
 
 .pillar:hover .modernIcon,
 .stats article:hover .statIcon {
@@ -750,13 +659,7 @@ footer span {
     0 24px 54px rgba(0,0,0,0.38);
 }
 
-@keyframes iconSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* PROGRAMA */
+@keyframes iconSpin { to { transform: rotate(360deg); } }
 
 .program {
   display: grid;
@@ -766,15 +669,8 @@ footer span {
   padding-bottom: 88px;
 }
 
-.programHeader {
-  position: sticky;
-  top: 100px;
-}
-
-.timeline {
-  display: grid;
-  gap: 12px;
-}
+.programHeader { position: sticky; top: 100px; }
+.timeline { display: grid; gap: 12px; }
 
 .timelineItem {
   display: grid;
@@ -798,12 +694,7 @@ footer span {
   box-shadow: 0 14px 34px rgba(227,36,36,0.24);
 }
 
-.timelineItem p {
-  margin: 0;
-  font-weight: 700;
-}
-
-/* INSCRIPCIÓN */
+.timelineItem p { margin: 0; font-weight: 700; }
 
 .inscription {
   display: grid;
@@ -813,9 +704,7 @@ footer span {
   padding: 54px 0 82px;
 }
 
-.inscriptionCopy {
-  padding: 30px 0;
-}
+.inscriptionCopy { padding: 30px 0; }
 
 .qrBox {
   display: flex;
@@ -835,10 +724,7 @@ footer span {
   border: 4px solid #ffffff;
 }
 
-.qrBox div {
-  display: grid;
-  gap: 6px;
-}
+.qrBox div { display: grid; gap: 6px; }
 
 .qrBox strong {
   font-family: 'Rajdhani', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -849,10 +735,7 @@ footer span {
   color: rgba(255,255,255,0.88);
 }
 
-.qrBox span {
-  color: var(--muted);
-  font-weight: 600;
-}
+.qrBox span { color: var(--muted); font-weight: 600; }
 
 .form {
   display: grid;
@@ -891,9 +774,7 @@ textarea {
 }
 
 input::placeholder,
-textarea::placeholder {
-  color: rgba(255,255,255,0.34);
-}
+textarea::placeholder { color: rgba(255,255,255,0.34); }
 
 input:focus,
 textarea:focus {
@@ -901,8 +782,36 @@ textarea:focus {
   box-shadow: 0 0 0 4px rgba(227, 36, 36, 0.14);
 }
 
-textarea {
-  resize: vertical;
+textarea { resize: vertical; }
+
+.photoField {
+  padding: 16px;
+  border: 1px dashed rgba(255,255,255,0.22);
+  border-radius: 22px;
+  background: rgba(0,0,0,0.18);
+}
+
+.photoField input[type="file"] {
+  padding: 12px;
+  border-style: dashed;
+  cursor: pointer;
+}
+
+.photoHelp {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.photoPreview {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.18);
+  margin-top: 8px;
 }
 
 .check {
@@ -933,24 +842,19 @@ textarea {
   font-weight: 700;
 }
 
-/* FOOTER */
-
-footer {
+.siteFooter {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto 32px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 16px;
-  padding: 24px 0;
+  padding: 22px 0;
   border-top: 1px solid var(--line);
 }
 
 .footerEvent,
-.footerBrand {
-  display: grid;
-  gap: 4px;
-}
+.footerBrand { display: grid; gap: 6px; }
 
 .footerEvent strong,
 .footerBrand strong {
@@ -966,98 +870,72 @@ footer {
   font-weight: 600;
 }
 
-.footerBrand {
-  text-align: right;
-}
+.footerBrand { text-align: right; }
 
 .footerBrand strong {
   color: var(--red);
   font-size: 1.3rem;
   letter-spacing: 0.02em;
-  text-shadow: 0 0 22px rgba(227, 36, 36, 0.28);
+  text-shadow:
+    0 3px 0 rgba(0,0,0,0.45),
+    0 0 22px rgba(227,36,36,0.25);
 }
-
-footer strong {
-  font-family: 'Black Ops One', system-ui;
-  text-transform: lowercase;
-  color: #ffffff;
-}
-
-/* RESPONSIVE */
 
 @media (max-width: 920px) {
-  .navLinks {
-    display: none;
-  }
+  .navLinks { display: none; }
 
   .hero,
   .experience,
   .program,
   .inscription,
   .stats,
-  .pillars {
+  .pillars,
+  .pilotHighlight {
     grid-template-columns: 1fr;
   }
 
-  .hero {
-    margin-top: 42px;
-  }
+  .hero { margin-top: 42px; }
+  .heroCard { min-height: 500px; transform: none; }
+  .heroImage { min-height: 470px; background-position: 60% center; }
 
-  .heroCard {
-    min-height: 500px;
-    transform: none;
-  }
-
-  .heroImage {
-    min-height: 470px;
-    background-position: 60% center;
-  }
-
-  .heroImage::after {
-    left: 24px;
-    bottom: 84px;
-    max-width: 260px;
-    font-size: 2.55rem;
-  }
-
-  .floatingBadge.top {
-    top: 20px;
-    right: 20px;
-    padding: 16px 22px;
-    font-size: 1rem;
-  }
-
-  .floatingBadge.bottom {
-    right: 20px;
+  .heroSlots {
+    left: 20px;
     bottom: 20px;
-    padding: 13px 18px;
-    font-size: 0.9rem;
-    max-width: 210px;
+    padding: 16px 24px;
+    font-size: 1.15rem;
   }
 
-  .experience {
+  .pilotHighlight {
+    min-height: auto;
     padding: 28px;
   }
 
-  .programHeader {
-    position: static;
+  .pilotText {
+    padding: 0;
   }
 
-  footer {
-  flex-direction: column;
-  align-items: flex-start;
-}
+  .pilotText h2 {
+    font-size: clamp(2.6rem, 10vw, 5rem);
+  }
 
-.footerBrand {
-  text-align: left;
-}
+  .pilotSecondPhoto,
+  .pilotSecondPhoto img {
+    min-height: 360px;
+  }
+
+  .experience { padding: 28px; }
+  .programHeader { position: static; }
+
+  .siteFooter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footerBrand { text-align: left; }
 }
 
 @media (max-width: 620px) {
-  .nav {
-    width: min(100% - 20px, 1180px);
-  }
-
+  .nav,
   .hero,
   .titleBlock,
   .experience,
@@ -1065,319 +943,852 @@ footer strong {
   .inscription,
   .stats,
   .pillars,
-  footer {
+  .siteFooter {
     width: min(100% - 20px, 1180px);
   }
 
-  .heroCopy h1 {
-    font-size: 3.1rem;
-  }
+  .heroCopy h1 { font-size: 3.1rem; }
+  .lead { font-size: 1.15rem; }
+  .heroActions { width: 100%; }
+  .btn { width: 100%; }
 
-  .lead {
-    font-size: 1.15rem;
-  }
+  .heroCard { min-height: 420px; }
+  .heroImage { min-height: 390px; background-position: 58% center; }
 
-  .heroActions {
-    width: 100%;
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  .heroCard {
-    min-height: 420px;
-  }
-
-  .heroImage {
-    min-height: 390px;
-    background-position: 58% center;
-  }
-
-  .heroImage::after {
-    left: 20px;
-    bottom: 78px;
-    max-width: 230px;
-    font-size: 2.15rem;
-  }
-
-  .field.two {
-    grid-template-columns: 1fr;
-  }
-
-  .timelineItem {
-    grid-template-columns: 1fr;
-  }
-
-  .floatingBadge.top {
-    top: 16px;
-    right: 16px;
-    padding: 14px 18px;
-    border-radius: 18px;
-    font-size: 0.9rem;
-  }
-
-  .floatingBadge.bottom {
-    right: 16px;
+  .heroSlots {
+    left: 16px;
     bottom: 16px;
-    padding: 12px 16px;
-    font-size: 0.82rem;
-    max-width: 190px;
-  }
-
-  .qrBox {
-    width: 100%;
-  }
-
-  .qrBox img {
-    width: 108px;
-    height: 108px;
-  }
-}
-
-.textRed {
-  color: var(--red);
-}
-
-/*
-  Ajuste final - títulos en minúscula + mejor interlineado.
-  Pegá este bloque al FINAL de src/styles.css.
-  No reemplaza todo el archivo: solo pisa las reglas necesarias.
-*/
-
-.heroCopy h1,
-.titleBlock h2,
-.experience h2,
-.program h2,
-.inscription h2 {
-  line-height: 1.03;
-  text-transform: lowercase;
-}
-
-.textRed {
-  color: var(--red);
-}
-
-.qrBox strong {
-  font-family: 'Rajdhani', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 0.98rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.88);
-}
-
-/* =========================================================
-   ACTUALIZACIÓN PILOTO - nombre + foto en un mismo bloque rojo
-   ========================================================= */
-
-.pilotSection {
-  width: min(1240px, calc(100% - 48px));
-  padding: 82px 0 70px;
-  text-align: left;
-}
-
-.pilotSection > .sectionTag {
-  display: flex;
-  margin: 0 auto 18px;
-}
-
-.pilotHighlight {
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  max-width: none;
-  min-height: 430px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.75fr);
-  align-items: stretch;
-  gap: 28px;
-  padding: 42px 34px 42px 54px;
-  overflow: hidden;
-  border-radius: 34px;
-  background:
-    radial-gradient(circle at 18% 24%, rgba(255,255,255,0.22), transparent 26rem),
-    linear-gradient(135deg, #ed2222 0%, #c91515 48%, #7f0909 100%);
-  border: 1px solid rgba(255,255,255,0.18);
-  box-shadow:
-    0 32px 88px rgba(0,0,0,0.34),
-    0 0 50px rgba(227,36,36,0.20);
-}
-
-.pilotHighlight::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    linear-gradient(115deg, transparent 0%, transparent 38%, rgba(255,255,255,0.12) 38.2%, transparent 39.4%),
-    linear-gradient(115deg, transparent 0%, transparent 55%, rgba(0,0,0,0.12) 55.2%, transparent 56.2%);
-}
-
-.pilotHighlight::after {
-  content: 'bmx racing';
-  position: absolute;
-  left: 42px;
-  bottom: -18px;
-  z-index: -1;
-  font-family: 'Black Ops One', system-ui;
-  font-size: clamp(5rem, 12vw, 10rem);
-  line-height: 0.8;
-  color: rgba(0,0,0,0.11);
-  text-transform: lowercase;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.pilotNameBox {
-  align-self: center;
-  position: relative;
-  z-index: 2;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  text-align: left;
-}
-
-.pilotKicker {
-  display: inline-flex;
-  width: fit-content;
-  margin: 0 0 16px;
-  padding: 9px 13px;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.22);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: rgba(255,255,255,0.88);
-  font-size: 0.86rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-}
-
-.pilotNameBox h2 {
-  max-width: 760px;
-  margin: 0;
-  color: #ffffff;
-  font-size: clamp(3.2rem, 6.5vw, 7.4rem);
-  line-height: 0.92;
-  text-align: left;
-  text-shadow:
-    0 6px 0 rgba(0,0,0,0.42),
-    0 0 34px rgba(0,0,0,0.20);
-}
-
-.pilotNameBox p {
-  max-width: 660px;
-  margin: 22px 0 0;
-  color: rgba(255,255,255,0.92);
-  font-size: 1.28rem;
-  font-weight: 700;
-  line-height: 1.42;
-  text-align: left;
-}
-
-.pilotSecondPhoto {
-  position: relative;
-  z-index: 2;
-  align-self: stretch;
-  min-height: 360px;
-  overflow: hidden;
-  border-radius: 28px;
-  border: 1px solid rgba(255,255,255,0.26);
-  background: rgba(0,0,0,0.22);
-  box-shadow:
-    0 24px 62px rgba(0,0,0,0.34),
-    0 0 0 1px rgba(255,255,255,0.10) inset;
-  transform: rotate(1deg);
-}
-
-.pilotSecondPhoto::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.28)),
-    linear-gradient(90deg, rgba(227,36,36,0.16), transparent 45%);
-}
-
-.pilotSecondPhoto img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 360px;
-  object-fit: cover;
-  object-position: center top;
-  filter: saturate(0.98) contrast(1.06);
-}
-
-@media (max-width: 920px) {
-  .pilotSection {
-    width: min(100% - 28px, 1180px);
-    padding: 64px 0 58px;
-  }
-
-  .pilotHighlight {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    padding: 30px;
-    gap: 24px;
-  }
-
-  .pilotNameBox h2 {
-    max-width: 100%;
-    font-size: clamp(3rem, 11vw, 5.8rem);
-  }
-
-  .pilotSecondPhoto {
-    min-height: 340px;
-    transform: none;
-  }
-
-  .pilotSecondPhoto img {
-    min-height: 340px;
-    height: 340px;
-  }
-}
-
-@media (max-width: 620px) {
-  .pilotSection {
-    width: min(100% - 20px, 1180px);
-    padding: 50px 0 46px;
+    padding: 14px 18px;
+    font-size: 0.96rem;
   }
 
   .pilotHighlight {
     padding: 22px;
-    border-radius: 26px;
+    border-radius: 28px;
+    gap: 18px;
   }
 
-  .pilotKicker {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+  .pilotText p {
+    font-size: 1.08rem;
   }
 
-  .pilotNameBox h2 {
-    font-size: clamp(2.45rem, 14vw, 3.8rem);
-    line-height: 0.98;
-  }
-
-  .pilotNameBox p {
-    margin-top: 16px;
-    font-size: 1.05rem;
-  }
-
-  .pilotSecondPhoto {
-    min-height: 260px;
-    border-radius: 22px;
-  }
-
+  .pilotSecondPhoto,
   .pilotSecondPhoto img {
     min-height: 260px;
-    height: 260px;
+  }
+
+  .field.two { grid-template-columns: 1fr; }
+  .timelineItem { grid-template-columns: 1fr; }
+  .qrBox { width: 100%; }
+  .qrBox img { width: 108px; height: 108px; }
+}
+
+
+/* ADMIN - ETAPA 3 */
+
+.adminPage {
+  min-height: 100vh;
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 20px 0 56px;
+  display: grid;
+  align-content: start;
+  gap: 28px;
+}
+
+.adminPage.panel {
+  width: min(1420px, calc(100% - 32px));
+}
+
+.adminTopbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  background: rgba(10, 10, 10, 0.76);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+}
+
+.adminCard {
+  width: min(620px, 100%);
+  margin: 64px auto 0;
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: 0 28px 74px rgba(0,0,0,0.34);
+}
+
+.adminCard.compact { text-align: center; }
+.adminCard.wide { width: min(980px, 100%); }
+
+.adminCard h1,
+.adminPanelHeader h1 {
+  margin: 0;
+  font-family: 'Black Ops One', system-ui;
+  line-height: 1.03;
+  text-transform: lowercase;
+  font-size: clamp(2.7rem, 5vw, 5rem);
+  color: #ffffff;
+  text-shadow:
+    0 5px 0 rgba(0,0,0,0.48),
+    0 0 38px rgba(227, 36, 36, 0.22);
+}
+
+.adminMuted {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.adminMuted.small {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.adminForm {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.adminMessage {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-weight: 700;
+}
+
+.adminCard .adminMessage {
+  margin-top: 18px;
+}
+
+.adminMessage.error,
+.adminMessage.notice {
+  background: rgba(227, 36, 36, 0.12);
+  border: 1px solid rgba(227, 36, 36, 0.35);
+  color: #ffffff;
+}
+
+.adminMessage.notice {
+  background: rgba(255,255,255,0.055);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.adminLogout,
+.adminMiniBtn {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #ffffff;
+  font-family: 'Rajdhani', ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.adminLogout:hover,
+.adminMiniBtn:hover {
+  border-color: rgba(227, 36, 36, 0.74);
+  background: rgba(227, 36, 36, 0.10);
+}
+
+.adminMiniBtn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
+.adminMiniBtn.whatsapp {
+  background: rgba(37, 211, 102, 0.12);
+  border-color: rgba(37, 211, 102, 0.35);
+}
+
+.adminStatusGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.adminStatusGrid.dashboardStats {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 0;
+}
+
+.adminStatusGrid article,
+.pilotDataGrid article {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(0,0,0,0.22);
+}
+
+.adminStatusGrid span,
+.pilotDataGrid span,
+.accessBox span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.adminStatusGrid strong,
+.pilotDataGrid strong,
+.accessBox strong {
+  display: block;
+  margin-top: 8px;
+  color: #ffffff;
+  font-weight: 800;
+  word-break: break-word;
+}
+
+.adminStatusGrid.dashboardStats strong {
+  font-family: 'Black Ops One', system-ui;
+  color: var(--red);
+  font-size: 2rem;
+  line-height: 1;
+  text-shadow: 0 0 24px rgba(227, 36, 36, 0.2);
+}
+
+.adminPanelHeader {
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 24px;
+  align-items: end;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  background:
+    linear-gradient(135deg, rgba(227,36,36,0.11), rgba(255,255,255,0.035)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: 0 28px 74px rgba(0,0,0,0.24);
+}
+
+.adminWorkspace {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.pilotListPanel,
+.pilotDetailPanel {
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: 0 22px 64px rgba(0,0,0,0.22);
+}
+
+.pilotListPanel {
+  position: sticky;
+  top: 20px;
+  padding: 18px;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+}
+
+.pilotDetailPanel {
+  padding: 24px;
+  min-height: 620px;
+}
+
+.pilotFilters {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+select {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 18px;
+  outline: none;
+  background: rgba(0,0,0,0.34);
+  color: var(--text);
+  padding: 15px 16px;
+  font: inherit;
+  font-weight: 700;
+}
+
+select:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px rgba(227, 36, 36, 0.14);
+}
+
+.pilotList {
+  display: grid;
+  gap: 10px;
+}
+
+.pilotListItem {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  background: rgba(0,0,0,0.18);
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.pilotListItem:hover,
+.pilotListItem.selected {
+  border-color: rgba(227,36,36,0.65);
+  background: rgba(227,36,36,0.10);
+  transform: translateY(-1px);
+}
+
+.pilotListItem img {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  object-fit: cover;
+  background: rgba(255,255,255,0.08);
+}
+
+.pilotListItem span {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.pilotListItem strong {
+  font-size: 1.1rem;
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pilotListItem small {
+  color: var(--muted);
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.statusPill {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-style: normal;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.statusPill.pending {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: #ffffff;
+}
+
+.statusPill.paid {
+  background: rgba(227,36,36,0.16);
+  border: 1px solid rgba(227,36,36,0.55);
+  color: #ffffff;
+}
+
+.emptyState {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  border-radius: 20px;
+  background: rgba(0,0,0,0.16);
+}
+
+.emptyState.large {
+  min-height: 460px;
+  place-content: center;
+  text-align: center;
+}
+
+.emptyState strong {
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.emptyState span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.pilotDetailHero {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 26px;
+  background:
+    linear-gradient(135deg, rgba(227,36,36,0.16), rgba(255,255,255,0.045)),
+    rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.pilotDetailHero img {
+  width: 180px;
+  height: 180px;
+  border-radius: 24px;
+  object-fit: cover;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+.pilotDetailHero h2 {
+  margin: 12px 0 8px;
+  font-family: 'Black Ops One', system-ui;
+  line-height: 1.03;
+  text-transform: lowercase;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  color: #ffffff;
+}
+
+.pilotDetailHero p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.pilotDataGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.pilotDataGrid article:last-child {
+  grid-column: span 3;
+}
+
+.accessBox {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 26px;
+  background: #e32424;
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 24px 54px rgba(227,36,36,0.16);
+}
+
+.accessBox span,
+.accessBox small {
+  color: rgba(255,255,255,0.8);
+}
+
+.accessBox strong {
+  font-family: 'Black Ops One', system-ui;
+  color: #ffffff;
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  line-height: 1;
+}
+
+.accessBox small {
+  display: block;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.adminActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  max-width: 460px;
+}
+
+.feedbackForm {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.18);
+}
+
+.feedbackHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.feedbackHeader h3 {
+  margin: 0;
+  font-family: 'Black Ops One', system-ui;
+  text-transform: lowercase;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: #ffffff;
+}
+
+.feedbackGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 1120px) {
+  .adminPanelHeader,
+  .adminWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .pilotListPanel {
+    position: static;
+    max-height: none;
+  }
+
+  .adminStatusGrid.dashboardStats {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
+@media (max-width: 920px) {
+  .adminStatusGrid,
+  .pilotDataGrid,
+  .feedbackGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pilotDataGrid article:last-child {
+    grid-column: auto;
+  }
+
+  .accessBox {
+    grid-template-columns: 1fr;
+  }
+
+  .adminActions {
+    justify-content: flex-start;
+    max-width: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .adminPage,
+  .adminPage.panel {
+    width: min(100% - 20px, 1180px);
+  }
+
+  .adminTopbar {
+    border-radius: 24px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adminCard,
+  .adminPanelHeader,
+  .pilotListPanel,
+  .pilotDetailPanel {
+    padding: 20px;
+    border-radius: 26px;
+  }
+
+  .adminCard {
+    margin-top: 34px;
+  }
+
+  .adminStatusGrid.dashboardStats {
+    grid-template-columns: 1fr;
+  }
+
+  .pilotDetailHero {
+    grid-template-columns: 1fr;
+  }
+
+  .pilotDetailHero img {
+    width: 100%;
+    height: 280px;
+  }
+
+  .adminMiniBtn {
+    width: 100%;
+  }
+}
+
+/* ACCESO PILOTO */
+
+.pilotAccessPage {
+  width: min(1180px, calc(100% - 32px));
+  margin: 18px auto 64px;
+}
+
+.accessIntro {
+  max-width: 980px;
+  margin: 70px auto 28px;
+  text-align: center;
+}
+
+.accessIntro h1 {
+  margin: 0;
+  font-family: 'Black Ops One', system-ui;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 1.02;
+  text-transform: lowercase;
+  color: #ffffff;
+  text-shadow:
+    0 5px 0 rgba(0,0,0,0.48),
+    0 0 38px rgba(227, 36, 36, 0.22);
+}
+
+.accessIntro p:not(.sectionTag) {
+  max-width: 760px;
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-size: 1.22rem;
+  line-height: 1.5;
+  font-weight: 650;
+}
+
+.pilotAccessGrid {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.pilotCodeCard,
+.pilotAccessEmpty,
+.pilotPortalCard {
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028)),
+    rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 22px 64px rgba(0,0,0,0.22);
+}
+
+.pilotCodeCard {
+  position: sticky;
+  top: 100px;
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+
+.pilotCodeCard input {
+  font-family: 'Black Ops One', system-ui;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pilotAccessEmpty {
+  min-height: 320px;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  padding: 36px;
+  text-align: center;
+  border-style: dashed;
+}
+
+.pilotAccessEmpty strong {
+  font-family: 'Black Ops One', system-ui;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  line-height: 1.04;
+  text-transform: lowercase;
+  color: #ffffff;
+}
+
+.pilotAccessEmpty span {
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.5;
+  font-weight: 650;
+}
+
+.pilotPortalCard {
+  overflow: hidden;
+  padding: 0;
+}
+
+.portalHero {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(135deg, rgba(227,36,36,0.72), rgba(115, 8, 8, 0.9)),
+    #e32424;
+}
+
+.portalHero img {
+  width: 240px;
+  height: 240px;
+  border-radius: 28px;
+  object-fit: cover;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 22px 42px rgba(0,0,0,0.22);
+}
+
+.portalHero h2 {
+  margin: 14px 0 8px;
+  font-family: 'Black Ops One', system-ui;
+  font-size: clamp(2.5rem, 6vw, 5.4rem);
+  line-height: 1;
+  text-transform: lowercase;
+  color: #ffffff;
+  text-shadow: 0 5px 0 rgba(0,0,0,0.34);
+}
+
+.portalHero p {
+  margin: 0;
+  color: rgba(255,255,255,0.86);
+  font-size: 1.25rem;
+  font-weight: 750;
+}
+
+.portalData {
+  margin: 20px;
+}
+
+.portalFeedback {
+  display: grid;
+  gap: 16px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.18);
+}
+
+.feedbackReadGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.feedbackReadBlock {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.045);
+}
+
+.feedbackReadBlock.mainFeedback {
+  background: rgba(227,36,36,0.12);
+  border-color: rgba(227,36,36,0.28);
+}
+
+.feedbackReadBlock span {
+  color: rgba(255,255,255,0.72);
+  font-size: 0.88rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.feedbackReadBlock p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  font-weight: 650;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 1040px) {
+  .pilotAccessGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pilotCodeCard {
+    position: static;
+  }
+}
+
+@media (max-width: 780px) {
+  .portalHero,
+  .feedbackReadGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .portalHero img {
+    width: 100%;
+    height: 320px;
+  }
+}
+
+@media (max-width: 620px) {
+  .pilotAccessPage {
+    width: min(100% - 20px, 1180px);
+  }
+
+  .accessIntro {
+    margin-top: 42px;
+    text-align: left;
+  }
+
+  .accessIntro h1 {
+    font-size: 2.8rem;
+  }
+
+  .pilotCodeCard,
+  .pilotAccessEmpty,
+  .portalFeedback {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .portalHero {
+    padding: 20px;
+  }
+
+  .portalHero img {
+    height: 260px;
+  }
+
+  .portalHero h2 {
+    font-size: 2.4rem;
+  }
+
+  .portalData,
+  .portalFeedback {
+    margin: 14px;
+  }
+}
