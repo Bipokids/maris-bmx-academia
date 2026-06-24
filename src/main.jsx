@@ -503,9 +503,16 @@ function App() {
       </section>
 
       <footer>
-        <strong>Academia de Verano BMX 2027</strong>
-        <span>Buenos Aires, Argentina · Cupos limitados</span>
-      </footer>
+  <div className="footerEvent">
+    <strong>Academia de Verano BMX 2027</strong>
+    <span>Buenos Aires, Argentina · Cupos limitados</span>
+  </div>
+
+  <div className="footerBrand">
+    <span>Desarrollado por</span>
+    <strong>NexoTech</strong>
+  </div>
+</footer>
     </main>
   )
 }

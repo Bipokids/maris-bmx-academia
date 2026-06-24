@@ -939,10 +939,42 @@ footer {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto 32px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 20px 0;
+  padding: 24px 0;
   border-top: 1px solid var(--line);
+}
+
+.footerEvent,
+.footerBrand {
+  display: grid;
+  gap: 4px;
+}
+
+.footerEvent strong,
+.footerBrand strong {
+  font-family: 'Black Ops One', system-ui;
+  text-transform: lowercase;
+  color: #ffffff;
+}
+
+.footerEvent span,
+.footerBrand span {
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.footerBrand {
+  text-align: right;
+}
+
+.footerBrand strong {
+  color: var(--red);
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 22px rgba(227, 36, 36, 0.28);
 }
 
 footer strong {
@@ -1012,8 +1044,13 @@ footer strong {
   }
 
   footer {
-    flex-direction: column;
-  }
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footerBrand {
+  text-align: left;
+}
 }
 
 @media (max-width: 620px) {
