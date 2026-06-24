@@ -6,6 +6,7 @@ import {
   update,
   get,
   onValue,
+  runTransaction,
   serverTimestamp
 } from 'firebase/database'
 import {
@@ -30,6 +31,8 @@ const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
 const storage = getStorage(app)
 const auth = getAuth(app)
+
+const MAX_CUPOS = 36
 
 function sanitizeFileExtension(fileName = '') {
   const extension = fileName.split('.').pop()?.toLowerCase() || 'jpg'
@@ -110,9 +113,54 @@ function buildPortalPayload(inscripcion, overrides = {}) {
   }
 }
 
+
+export function observarCupos(callback) {
+  return onValue(dbRef(database, 'cupos/ocupados'), (snapshot) => {
+    const ocupados = Number(snapshot.val() || 0)
+
+    callback({
+      ocupados,
+      disponibles: Math.max(MAX_CUPOS - ocupados, 0),
+      completo: ocupados >= MAX_CUPOS,
+      maximo: MAX_CUPOS
+    })
+  })
+}
+
+async function reservarCupo() {
+  const cuposRef = dbRef(database, 'cupos/ocupados')
+
+  const result = await runTransaction(cuposRef, (currentValue) => {
+    const ocupados = Number(currentValue || 0)
+
+    if (ocupados >= MAX_CUPOS) {
+      return undefined
+    }
+
+    return ocupados + 1
+  })
+
+  if (!result.committed) {
+    const error = new Error('CUPO_COMPLETO')
+    error.code = 'CUPO_COMPLETO'
+    throw error
+  }
+
+  return Number(result.snapshot.val())
+}
+
 export async function guardarInscripcion(data, fotoFile) {
   if (!fotoFile) {
     throw new Error('La foto del piloto es obligatoria.')
+  }
+
+  const cuposSnapshot = await get(dbRef(database, 'cupos/ocupados'))
+  const ocupados = Number(cuposSnapshot.val() || 0)
+
+  if (ocupados >= MAX_CUPOS) {
+    const error = new Error('CUPO_COMPLETO')
+    error.code = 'CUPO_COMPLETO'
+    throw error
   }
 
   const inscripcionRef = push(dbRef(database, 'inscripciones'))
@@ -127,11 +175,14 @@ export async function guardarInscripcion(data, fotoFile) {
     contentType: fotoFile.type || 'image/jpeg'
   })
 
+  const numeroCupo = await reservarCupo()
   const fotoUrl = await getDownloadURL(fotoStorageRef)
 
   const record = {
     id,
     codigoAcceso,
+    numeroCupo,
+    maxCupos: MAX_CUPOS,
     nombre: data.nombre.trim(),
     edad: Number(data.edad),
     whatsapp: data.whatsapp.trim(),
@@ -166,6 +217,7 @@ export async function guardarInscripcion(data, fotoFile) {
   const updates = {
     [`inscripciones/${id}`]: record,
     [`codigosAcceso/${codigoAcceso}`]: {
+      inscripcionId: id,
       habilitado: false,
       pagoConfirmado: false,
       estado: 'pendiente_pago',
@@ -233,6 +285,7 @@ export async function actualizarPagoInscripcion(inscripcion, pagoConfirmado) {
     [`inscripciones/${inscripcion.id}/accesoHabilitado`]: pagoConfirmado,
     [`inscripciones/${inscripcion.id}/estado`]: estado,
     [`inscripciones/${inscripcion.id}/updatedAt`]: serverTimestamp(),
+    [`codigosAcceso/${inscripcion.codigoAcceso}/inscripcionId`]: inscripcion.id,
     [`codigosAcceso/${inscripcion.codigoAcceso}/habilitado`]: pagoConfirmado,
     [`codigosAcceso/${inscripcion.codigoAcceso}/pagoConfirmado`]: pagoConfirmado,
     [`codigosAcceso/${inscripcion.codigoAcceso}/estado`]: estado,

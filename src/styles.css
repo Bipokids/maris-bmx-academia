@@ -1792,3 +1792,57 @@ select:focus {
     margin: 14px;
   }
 }
+
+
+/* CUPO DE INSCRIPCIÓN */
+.cuposBox {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(227, 36, 36, 0.35);
+  background: rgba(227, 36, 36, 0.1);
+}
+
+.cuposBox strong {
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cuposBox span {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.cuposBox.full {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* EXPORTACIÓN ADMIN */
+.adminHeaderActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.adminMiniBtn.export {
+  background: var(--red);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 14px 34px rgba(227, 36, 36, 0.24);
+}
+
+.adminMiniBtn.export:hover {
+  background: #ff2a2a;
+}
+
+@media (max-width: 620px) {
+  .adminHeaderActions,
+  .adminHeaderActions .adminMiniBtn {
+    width: 100%;
+  }
+}

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import * as XLSX from 'xlsx'
 import {
   guardarInscripcion,
+  observarCupos,
   escucharSesionAdmin,
   iniciarSesionAdmin,
   cerrarSesionAdmin,
@@ -98,15 +100,20 @@ async function saveInscription(data, photoFile) {
   } catch (error) {
     console.error('Error guardando inscripción en Firebase:', error)
 
-    saveLocalBackup({
-      ...backupRecord,
-      guardadoEnFirebase: false,
-      firebaseError: error.message
-    })
+    const cupoCompleto = error?.code === 'CUPO_COMPLETO' || error?.message === 'CUPO_COMPLETO'
+
+    if (!cupoCompleto) {
+      saveLocalBackup({
+        ...backupRecord,
+        guardadoEnFirebase: false,
+        firebaseError: error.message
+      })
+    }
 
     return {
       ...backupRecord,
       guardadoEnFirebase: false,
+      cupoCompleto,
       firebaseError: error.message
     }
   }
@@ -220,6 +227,17 @@ function LandingPage() {
   const [sent, setSent] = useState(false)
   const [saving, setSaving] = useState(false)
   const [statusMessage, setStatusMessage] = useState('')
+  const [cupos, setCupos] = useState({
+    ocupados: 0,
+    disponibles: 36,
+    completo: false,
+    maximo: 36
+  })
+
+  useEffect(() => {
+    const unsubscribe = observarCupos(setCupos)
+    return () => unsubscribe()
+  }, [])
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target
@@ -269,6 +287,12 @@ function LandingPage() {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
+    if (cupos.completo) {
+      setSent(true)
+      setStatusMessage('El cupo máximo de 36 pilotos ya fue cubierto.')
+      return
+    }
+
     if (!photoFile) {
       setSent(true)
       setStatusMessage('Para completar la inscripción necesitamos la foto del piloto.')
@@ -284,17 +308,23 @@ function LandingPage() {
 
     if (savedRecord.guardadoEnFirebase) {
       setStatusMessage('Inscripción registrada correctamente. WhatsApp se abrió para pedir el PDF informativo.')
+
+      const message = encodeURIComponent(buildWhatsappText(formSnapshot))
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank')
+
+      setForm(initialForm)
+      setPhotoFile(null)
+      setPhotoPreview('')
+      setFormKey((current) => current + 1)
+    } else if (savedRecord.cupoCompleto) {
+      setStatusMessage('El cupo máximo de 36 pilotos ya fue cubierto.')
     } else {
       setStatusMessage('WhatsApp se abrió, pero no pudimos guardar en Firebase. Dejamos un backup local en este navegador.')
+
+      const message = encodeURIComponent(buildWhatsappText(formSnapshot))
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank')
     }
 
-    const message = encodeURIComponent(buildWhatsappText(formSnapshot))
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank')
-
-    setForm(initialForm)
-    setPhotoFile(null)
-    setPhotoPreview('')
-    setFormKey((current) => current + 1)
     setSent(true)
     setSaving(false)
   }
@@ -598,8 +628,17 @@ function LandingPage() {
             </span>
           </label>
 
-          <button className="btn primary full" type="submit" disabled={saving}>
-            {saving ? 'Guardando...' : 'Enviar y pedir PDF'}
+          <div className={`cuposBox ${cupos.completo ? 'full' : ''}`}>
+            <strong>
+              {cupos.completo ? 'Cupos agotados' : `${cupos.disponibles} cupos disponibles`}
+            </strong>
+            <span>
+              {cupos.ocupados} de {cupos.maximo} lugares reservados
+            </span>
+          </div>
+
+          <button className="btn primary full" type="submit" disabled={saving || cupos.completo}>
+            {cupos.completo ? 'Cupos agotados' : saving ? 'Guardando...' : 'Enviar y pedir PDF'}
           </button>
 
           {sent && (
@@ -696,6 +735,70 @@ function buildAccessCodeMessage(inscripcion) {
     '',
     'Ingresá al sitio, entrá en Acceso Piloto y cargá ese código para ver tu perfil y la devolución del evento.'
   ].join('\n')
+}
+
+
+function exportarInscriptosExcel(inscriptos) {
+  const rows = inscriptos.map((piloto) => ({
+    'Nro cupo': piloto.numeroCupo || '',
+    'Código acceso': piloto.codigoAcceso || '',
+    'Nombre': piloto.nombre || '',
+    'Edad': piloto.edad || '',
+    'WhatsApp': piloto.whatsapp || '',
+    'Email': piloto.email || '',
+    'Ciudad / Provincia': piloto.ciudad || '',
+    'Categoría': piloto.categoria || '',
+    'Club / equipo': piloto.club || '',
+    'Objetivo': piloto.objetivo || '',
+    'Estado': piloto.estado || '',
+    'Pago confirmado': piloto.pagoConfirmado ? 'SI' : 'NO',
+    'Acceso habilitado': piloto.accesoHabilitado ? 'SI' : 'NO',
+    'Código entregado': piloto.codigoEntregado ? 'SI' : 'NO',
+    'Devolución cargada': piloto.devolucionCargada ? 'SI' : 'NO',
+    'Foto URL': piloto.fotoUrl || '',
+    'Fecha registro': piloto.fechaRegistro || '',
+    'Devolución general': piloto.devolucion || '',
+    'Diagnóstico': piloto.resultados?.diagnostico || '',
+    'Técnica': piloto.resultados?.tecnica || '',
+    'Físico': piloto.resultados?.fisico || '',
+    'Mentalidad': piloto.resultados?.mentalidad || '',
+    'Nutrición': piloto.resultados?.nutricion || '',
+    'Recomendaciones': piloto.resultados?.recomendaciones || ''
+  }))
+
+  const worksheet = XLSX.utils.json_to_sheet(rows)
+  worksheet['!cols'] = [
+    { wch: 10 },
+    { wch: 18 },
+    { wch: 28 },
+    { wch: 8 },
+    { wch: 18 },
+    { wch: 30 },
+    { wch: 26 },
+    { wch: 18 },
+    { wch: 24 },
+    { wch: 44 },
+    { wch: 18 },
+    { wch: 18 },
+    { wch: 18 },
+    { wch: 18 },
+    { wch: 18 },
+    { wch: 45 },
+    { wch: 24 },
+    { wch: 48 },
+    { wch: 48 },
+    { wch: 48 },
+    { wch: 48 },
+    { wch: 48 },
+    { wch: 48 },
+    { wch: 48 }
+  ]
+
+  const workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Inscriptos')
+
+  const fecha = new Date().toISOString().slice(0, 10)
+  XLSX.writeFile(workbook, `inscriptos-bmx-academia-${fecha}.xlsx`)
 }
 
 function AdminPage({ onGoHome }) {
@@ -1011,6 +1114,17 @@ function AdminPage({ onGoHome }) {
           <p className="adminMuted">
             Desde este panel podés ver datos, confirmar pagos, copiar códigos de acceso y cargar devoluciones por piloto.
           </p>
+
+          <div className="adminHeaderActions">
+            <button
+              className="adminMiniBtn export"
+              type="button"
+              onClick={() => exportarInscriptosExcel(inscripciones)}
+              disabled={inscripciones.length === 0}
+            >
+              Descargar Excel
+            </button>
+          </div>
         </div>
 
         <div className="adminStatusGrid dashboardStats">
