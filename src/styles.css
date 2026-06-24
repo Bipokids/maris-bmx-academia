@@ -1,0 +1,1346 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #111111;
+  --bg-deep: #050505;
+  --card: rgba(255, 255, 255, 0.055);
+  --card-strong: rgba(255, 255, 255, 0.095);
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.68);
+  --soft: rgba(255, 255, 255, 0.42);
+  --red: #e32424;
+  --red-dark: #9d1111;
+  --red-soft: rgba(227, 36, 36, 0.18);
+  --line: rgba(255, 255, 255, 0.13);
+  --shadow: rgba(0, 0, 0, 0.48);
+
+  font-family: 'Rajdhani', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(227, 36, 36, 0.18), transparent 28rem),
+    radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.06), transparent 28rem),
+    radial-gradient(circle at 80% 90%, rgba(227, 36, 36, 0.12), transparent 34rem),
+    linear-gradient(135deg, #181414 0%, #070707 46%, #111111 100%);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0%, transparent 48%, rgba(227, 36, 36, 0.08) 48.2%, transparent 49.3%),
+    linear-gradient(115deg, transparent 0%, transparent 58%, rgba(255, 255, 255, 0.045) 58.2%, transparent 59%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  overflow: hidden;
+}
+
+/* NAV */
+
+.nav {
+  width: min(1180px, calc(100% - 32px));
+  margin: 18px auto 0;
+  position: sticky;
+  top: 12px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  background: rgba(10, 10, 10, 0.76);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+}
+
+.brand,
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  font-family: 'Black Ops One', system-ui;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+}
+
+.brandMark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--red);
+  color: #ffffff;
+  font-family: 'Black Ops One', system-ui;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  transform: skew(-7deg);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.2) inset,
+    0 12px 30px rgba(227, 36, 36, 0.34);
+}
+
+.navLinks a {
+  position: relative;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.navLinks a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 0;
+  height: 2px;
+  background: var(--red);
+  transition: width 0.2s ease;
+}
+
+.navLinks a:hover {
+  color: #ffffff;
+}
+
+.navLinks a:hover::after {
+  width: 100%;
+}
+
+/* HERO */
+
+.hero {
+  width: min(1180px, calc(100% - 32px));
+  margin: 64px auto 42px;
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
+  gap: 34px;
+  align-items: center;
+}
+
+.heroCopy h1,
+.titleBlock h2,
+.experience h2,
+.program h2,
+.inscription h2 {
+  margin: 0;
+  font-family: 'Black Ops One', system-ui;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.heroCopy h1 {
+  max-width: 780px;
+  font-size: clamp(3rem, 6.9vw, 6.7rem);
+  color: #ffffff;
+  text-shadow:
+    0 5px 0 rgba(0,0,0,0.48),
+    0 0 38px rgba(227, 36, 36, 0.22);
+}
+
+.heroCopy h1::first-letter {
+  color: #ffffff;
+}
+
+.eyebrow,
+.sectionTag {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0 0 16px;
+  padding: 8px 13px;
+  border: 1px solid rgba(227, 36, 36, 0.58);
+  border-radius: 999px;
+  background: rgba(227, 36, 36, 0.12);
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  box-shadow: 0 0 28px rgba(227, 36, 36, 0.16);
+}
+
+.lead {
+  max-width: 700px;
+  margin: 24px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.38;
+  font-weight: 500;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: 'Black Ops One', system-ui;
+  font-size: 0.88rem;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn.primary {
+  background: var(--red);
+  color: #ffffff;
+  box-shadow:
+    0 16px 42px rgba(227, 36, 36, 0.32),
+    0 0 0 1px rgba(255,255,255,0.18) inset;
+}
+
+.btn.primary:hover {
+  background: #ff2a2a;
+  box-shadow:
+    0 20px 52px rgba(227, 36, 36, 0.42),
+    0 0 0 1px rgba(255,255,255,0.24) inset;
+}
+
+.btn.ghost {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(255,255,255,0.18);
+  color: #ffffff;
+}
+
+.btn.ghost:hover {
+  border-color: rgba(227, 36, 36, 0.74);
+  background: rgba(227, 36, 36, 0.10);
+}
+
+.btn.full {
+  width: 100%;
+  border: 0;
+  font-size: 1rem;
+}
+
+.heroCard {
+  position: relative;
+  min-height: 610px;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 34px;
+  padding: 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03)),
+    rgba(255, 255, 255, 0.045);
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.46),
+    0 0 70px rgba(227, 36, 36, 0.09);
+  transform: rotate(1deg);
+}
+
+.heroCard::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  background:
+    linear-gradient(135deg, transparent 0%, rgba(227,36,36,0.4) 42%, transparent 43%),
+    linear-gradient(315deg, transparent 0%, rgba(255,255,255,0.16) 60%, transparent 61%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.heroImage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 580px;
+  border-radius: 26px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.02), rgba(5, 5, 5, 0.82)),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.22), transparent 55%),
+    url('/maris/maris-hero.jpg'),
+    linear-gradient(135deg, #181818, #383838 48%, #101010);
+  background-size: cover;
+  background-position: 80% center;
+  filter: saturate(0.96) contrast(1.1);
+}
+
+.heroImage::after {
+  content: none;
+}
+
+.heroSlots {
+  left: 26px;
+  right: auto;
+  top: auto;
+  bottom: 26px;
+  padding: 20px 30px;
+  border-radius: 22px;
+  background: #ffffff;
+  color: var(--red);
+  border: 2px solid var(--red);
+  font-size: 1.45rem;
+  letter-spacing: 0.01em;
+  transform: rotate(-2deg);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.32),
+    0 0 22px rgba(227, 36, 36, 0.14);
+}
+
+.pilotHighlight {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+}
+
+.pilotNameBox {
+  padding: 26px 28px 24px;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, #e32424 0%, #b11515 100%);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    0 24px 60px rgba(0,0,0,0.26),
+    0 0 28px rgba(227, 36, 36, 0.18);
+}
+
+.pilotNameBox h2 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.pilotNameBox p {
+  margin: 16px 0 0;
+  color: rgba(255,255,255,0.9);
+  font-size: 1.22rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.pilotSecondPhoto {
+  overflow: hidden;
+  border-radius: 30px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+}
+
+.pilotSecondPhoto img {
+  display: block;
+  width: 100%;
+  height: 430px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+@media (max-width: 920px) {
+  .heroSlots {
+    left: 20px;
+    bottom: 20px;
+    padding: 16px 24px;
+    font-size: 1.15rem;
+  }
+
+  .pilotSecondPhoto img {
+    height: 360px;
+  }
+}
+
+@media (max-width: 620px) {
+  .heroSlots {
+    left: 16px;
+    bottom: 16px;
+    padding: 14px 18px;
+    font-size: 0.96rem;
+  }
+
+  .pilotNameBox {
+    padding: 22px 20px;
+    border-radius: 24px;
+  }
+
+  .pilotNameBox p {
+    font-size: 1.05rem;
+  }
+
+  .pilotSecondPhoto img {
+    height: 260px;
+  }
+}
+
+.floatingBadge {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Black Ops One', system-ui;
+  text-transform: lowercase;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.34);
+  transform: rotate(-3deg);
+  backdrop-filter: blur(8px);
+}
+
+.floatingBadge.top {
+  top: 20px;
+  right: 20px;
+  padding: 18px 26px;
+  border-radius: 18px;
+  background: #ffffff;
+  color: var(--red);
+  border: 2px solid var(--red);
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.floatingBadge.bottom {
+  right: 24px;
+  bottom: 96px;
+  padding: 15px 22px;
+  border-radius: 999px;
+  background: var(--red);
+  color: #ffffff;
+  font-size: 0.98rem;
+  max-width: 250px;
+  transform: rotate(-2deg);
+}
+
+/* SECCIONES */
+
+.titleBlock,
+.experience,
+.program,
+.inscription,
+.stats,
+.pillars {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.titleBlock {
+  padding: 78px 0 56px;
+  text-align: center;
+}
+
+.titleBlock h2 {
+  font-size: clamp(2.5rem, 6.5vw, 6.6rem);
+}
+
+.titleBlock h2,
+.experience h2,
+.program h2,
+.inscription h2 {
+  color: #ffffff;
+  text-shadow:
+    0 5px 0 rgba(0,0,0,0.5),
+    0 0 32px rgba(227, 36, 36, 0.16);
+}
+
+.titleBlock p:not(.sectionTag) {
+  max-width: 760px;
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.experience {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 40px;
+  align-items: end;
+  padding: 48px;
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  background:
+    linear-gradient(135deg, rgba(227, 36, 36, 0.14), rgba(255, 255, 255, 0.045)),
+    rgba(255,255,255,0.035);
+  box-shadow: 0 24px 72px rgba(0,0,0,0.28);
+  overflow: hidden;
+}
+
+.experience::after {
+  content: '';
+  position: absolute;
+  right: -120px;
+  top: -120px;
+  width: 280px;
+  height: 280px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(227,36,36,0.34), transparent 68%);
+  pointer-events: none;
+}
+
+.experience h2,
+.program h2,
+.inscription h2 {
+  font-size: clamp(2.2rem, 5.1vw, 5.2rem);
+}
+
+.experience p:last-child {
+  position: relative;
+  z-index: 1;
+  color: var(--muted);
+  font-size: 1.28rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+/* PILARES */
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 20px 0 82px;
+}
+
+.pillar,
+.stats article,
+.timelineItem,
+.form,
+.qrBox {
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028)),
+    rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 22px 64px rgba(0,0,0,0.22);
+}
+
+.pillar {
+  position: relative;
+  min-height: 250px;
+  padding: 24px;
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+.pillar::before,
+.stats article::before {
+  content: '';
+  position: absolute;
+  top: -90px;
+  right: -90px;
+  width: 190px;
+  height: 190px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(227, 36, 36, 0.22), transparent 66%);
+  pointer-events: none;
+}
+
+.pillar::after,
+.stats article::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 4px;
+  height: 64px;
+  background: var(--red);
+  border-radius: 0 999px 999px 0;
+  box-shadow: 0 0 24px rgba(227,36,36,0.6);
+}
+
+.pillar h3 {
+  position: relative;
+  z-index: 1;
+  margin: 18px 0 10px;
+  font-family: 'Black Ops One', system-ui;
+  font-size: 1.25rem;
+  line-height: 1.05;
+  text-transform: lowercase;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+.pillar p,
+.stats p,
+.timelineItem p,
+.inscriptionCopy p,
+footer span {
+  position: relative;
+  z-index: 1;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* STATS */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 0 0 88px;
+}
+
+.stats article {
+  position: relative;
+  padding: 26px;
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+.stats h3 {
+  position: relative;
+  z-index: 1;
+  margin: 16px 0 8px;
+  font-family: 'Black Ops One', system-ui;
+  font-size: 1.4rem;
+  line-height: 1.05;
+  text-transform: lowercase;
+  color: #ffffff;
+}
+
+.stats p {
+  margin: 0;
+}
+
+/* ICONOS MODERNOS */
+
+.modernIcon,
+.statIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 22px;
+  margin-bottom: 22px;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 26% 22%, rgba(255,255,255,0.32), transparent 26px),
+    linear-gradient(135deg, rgba(227,36,36,0.85), rgba(122, 8, 8, 0.92));
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 18px 44px rgba(227,36,36,0.18),
+    0 18px 44px rgba(0,0,0,0.3);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.modernIcon::before,
+.statIcon::before {
+  content: '';
+  position: absolute;
+  inset: -45%;
+  background: conic-gradient(
+    from 180deg,
+    transparent,
+    rgba(255,255,255,0.7),
+    transparent,
+    rgba(227,36,36,0.85),
+    transparent
+  );
+  opacity: 0.34;
+  animation: iconSpin 6s linear infinite;
+}
+
+.modernIcon::after,
+.statIcon::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(30, 30, 30, 0.84), rgba(120, 6, 6, 0.72));
+}
+
+.modernIcon svg,
+.statIcon svg {
+  position: relative;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+}
+
+.iconStroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.iconDot {
+  fill: currentColor;
+}
+
+.modernIcon.yellow,
+.modernIcon.green,
+.modernIcon.cyan,
+.modernIcon.red,
+.statIcon.yellow,
+.statIcon.cyan,
+.statIcon.red {
+  color: #ffffff;
+}
+
+.pillar:hover .modernIcon,
+.stats article:hover .statIcon {
+  transform: translateY(-5px) rotate(-4deg) scale(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.26),
+    0 24px 54px rgba(227,36,36,0.28),
+    0 24px 54px rgba(0,0,0,0.38);
+}
+
+@keyframes iconSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* PROGRAMA */
+
+.program {
+  display: grid;
+  grid-template-columns: 0.86fr 1.14fr;
+  gap: 34px;
+  align-items: start;
+  padding-bottom: 88px;
+}
+
+.programHeader {
+  position: sticky;
+  top: 100px;
+}
+
+.timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.timelineItem span {
+  display: grid;
+  place-items: center;
+  min-height: 54px;
+  border-radius: 16px;
+  background: var(--red);
+  color: #ffffff;
+  font-family: 'Black Ops One', system-ui;
+  font-size: 0.86rem;
+  text-transform: lowercase;
+  box-shadow: 0 14px 34px rgba(227,36,36,0.24);
+}
+
+.timelineItem p {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* INSCRIPCIÓN */
+
+.inscription {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 26px;
+  align-items: start;
+  padding: 54px 0 82px;
+}
+
+.inscriptionCopy {
+  padding: 30px 0;
+}
+
+.qrBox {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  width: fit-content;
+  margin-top: 28px;
+  padding: 14px;
+  border-radius: 24px;
+}
+
+.qrBox img {
+  width: 128px;
+  height: 128px;
+  border-radius: 14px;
+  background: white;
+  border: 4px solid #ffffff;
+}
+
+.qrBox div {
+  display: grid;
+  gap: 6px;
+}
+
+.qrBox strong {
+  font-family: 'Rajdhani', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.88);
+}
+
+.qrBox span {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 30px;
+}
+
+.field.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255,255,255,0.88);
+  font-size: 0.98rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 18px;
+  outline: none;
+  background: rgba(0,0,0,0.34);
+  color: var(--text);
+  padding: 15px 16px;
+  font: inherit;
+  font-weight: 600;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255,255,255,0.34);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px rgba(227, 36, 36, 0.14);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.check {
+  display: flex;
+  grid-template-columns: auto 1fr;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--muted);
+  font-weight: 650;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.check input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--red);
+}
+
+.success {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(227, 36, 36, 0.12);
+  border: 1px solid rgba(227, 36, 36, 0.35);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* FOOTER */
+
+footer {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+footer strong {
+  font-family: 'Black Ops One', system-ui;
+  text-transform: lowercase;
+  color: #ffffff;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 920px) {
+  .navLinks {
+    display: none;
+  }
+
+  .hero,
+  .experience,
+  .program,
+  .inscription,
+  .stats,
+  .pillars {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    margin-top: 42px;
+  }
+
+  .heroCard {
+    min-height: 500px;
+    transform: none;
+  }
+
+  .heroImage {
+    min-height: 470px;
+    background-position: 60% center;
+  }
+
+  .heroImage::after {
+    left: 24px;
+    bottom: 84px;
+    max-width: 260px;
+    font-size: 2.55rem;
+  }
+
+  .floatingBadge.top {
+    top: 20px;
+    right: 20px;
+    padding: 16px 22px;
+    font-size: 1rem;
+  }
+
+  .floatingBadge.bottom {
+    right: 20px;
+    bottom: 20px;
+    padding: 13px 18px;
+    font-size: 0.9rem;
+    max-width: 210px;
+  }
+
+  .experience {
+    padding: 28px;
+  }
+
+  .programHeader {
+    position: static;
+  }
+
+  footer {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 620px) {
+  .nav {
+    width: min(100% - 20px, 1180px);
+  }
+
+  .hero,
+  .titleBlock,
+  .experience,
+  .program,
+  .inscription,
+  .stats,
+  .pillars,
+  footer {
+    width: min(100% - 20px, 1180px);
+  }
+
+  .heroCopy h1 {
+    font-size: 3.1rem;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+  }
+
+  .heroActions {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .heroCard {
+    min-height: 420px;
+  }
+
+  .heroImage {
+    min-height: 390px;
+    background-position: 58% center;
+  }
+
+  .heroImage::after {
+    left: 20px;
+    bottom: 78px;
+    max-width: 230px;
+    font-size: 2.15rem;
+  }
+
+  .field.two {
+    grid-template-columns: 1fr;
+  }
+
+  .timelineItem {
+    grid-template-columns: 1fr;
+  }
+
+  .floatingBadge.top {
+    top: 16px;
+    right: 16px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    font-size: 0.9rem;
+  }
+
+  .floatingBadge.bottom {
+    right: 16px;
+    bottom: 16px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    max-width: 190px;
+  }
+
+  .qrBox {
+    width: 100%;
+  }
+
+  .qrBox img {
+    width: 108px;
+    height: 108px;
+  }
+}
+
+.textRed {
+  color: var(--red);
+}
+
+/*
+  Ajuste final - títulos en minúscula + mejor interlineado.
+  Pegá este bloque al FINAL de src/styles.css.
+  No reemplaza todo el archivo: solo pisa las reglas necesarias.
+*/
+
+.heroCopy h1,
+.titleBlock h2,
+.experience h2,
+.program h2,
+.inscription h2 {
+  line-height: 1.03;
+  text-transform: lowercase;
+}
+
+.textRed {
+  color: var(--red);
+}
+
+.qrBox strong {
+  font-family: 'Rajdhani', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.88);
+}
+
+/* =========================================================
+   ACTUALIZACIÓN PILOTO - nombre + foto en un mismo bloque rojo
+   ========================================================= */
+
+.pilotSection {
+  width: min(1240px, calc(100% - 48px));
+  padding: 82px 0 70px;
+  text-align: left;
+}
+
+.pilotSection > .sectionTag {
+  display: flex;
+  margin: 0 auto 18px;
+}
+
+.pilotHighlight {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: none;
+  min-height: 430px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.75fr);
+  align-items: stretch;
+  gap: 28px;
+  padding: 42px 34px 42px 54px;
+  overflow: hidden;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255,255,255,0.22), transparent 26rem),
+    linear-gradient(135deg, #ed2222 0%, #c91515 48%, #7f0909 100%);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 32px 88px rgba(0,0,0,0.34),
+    0 0 50px rgba(227,36,36,0.20);
+}
+
+.pilotHighlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0%, transparent 38%, rgba(255,255,255,0.12) 38.2%, transparent 39.4%),
+    linear-gradient(115deg, transparent 0%, transparent 55%, rgba(0,0,0,0.12) 55.2%, transparent 56.2%);
+}
+
+.pilotHighlight::after {
+  content: 'bmx racing';
+  position: absolute;
+  left: 42px;
+  bottom: -18px;
+  z-index: -1;
+  font-family: 'Black Ops One', system-ui;
+  font-size: clamp(5rem, 12vw, 10rem);
+  line-height: 0.8;
+  color: rgba(0,0,0,0.11);
+  text-transform: lowercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.pilotNameBox {
+  align-self: center;
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+}
+
+.pilotKicker {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0 0 16px;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.88);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.pilotNameBox h2 {
+  max-width: 760px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(3.2rem, 6.5vw, 7.4rem);
+  line-height: 0.92;
+  text-align: left;
+  text-shadow:
+    0 6px 0 rgba(0,0,0,0.42),
+    0 0 34px rgba(0,0,0,0.20);
+}
+
+.pilotNameBox p {
+  max-width: 660px;
+  margin: 22px 0 0;
+  color: rgba(255,255,255,0.92);
+  font-size: 1.28rem;
+  font-weight: 700;
+  line-height: 1.42;
+  text-align: left;
+}
+
+.pilotSecondPhoto {
+  position: relative;
+  z-index: 2;
+  align-self: stretch;
+  min-height: 360px;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.26);
+  background: rgba(0,0,0,0.22);
+  box-shadow:
+    0 24px 62px rgba(0,0,0,0.34),
+    0 0 0 1px rgba(255,255,255,0.10) inset;
+  transform: rotate(1deg);
+}
+
+.pilotSecondPhoto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.28)),
+    linear-gradient(90deg, rgba(227,36,36,0.16), transparent 45%);
+}
+
+.pilotSecondPhoto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(0.98) contrast(1.06);
+}
+
+@media (max-width: 920px) {
+  .pilotSection {
+    width: min(100% - 28px, 1180px);
+    padding: 64px 0 58px;
+  }
+
+  .pilotHighlight {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 30px;
+    gap: 24px;
+  }
+
+  .pilotNameBox h2 {
+    max-width: 100%;
+    font-size: clamp(3rem, 11vw, 5.8rem);
+  }
+
+  .pilotSecondPhoto {
+    min-height: 340px;
+    transform: none;
+  }
+
+  .pilotSecondPhoto img {
+    min-height: 340px;
+    height: 340px;
+  }
+}
+
+@media (max-width: 620px) {
+  .pilotSection {
+    width: min(100% - 20px, 1180px);
+    padding: 50px 0 46px;
+  }
+
+  .pilotHighlight {
+    padding: 22px;
+    border-radius: 26px;
+  }
+
+  .pilotKicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+  }
+
+  .pilotNameBox h2 {
+    font-size: clamp(2.45rem, 14vw, 3.8rem);
+    line-height: 0.98;
+  }
+
+  .pilotNameBox p {
+    margin-top: 16px;
+    font-size: 1.05rem;
+  }
+
+  .pilotSecondPhoto {
+    min-height: 260px;
+    border-radius: 22px;
+  }
+
+  .pilotSecondPhoto img {
+    min-height: 260px;
+    height: 260px;
+  }
+}
+
