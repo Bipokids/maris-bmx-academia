@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import * as XLSX from 'xlsx'
+import { jsPDF } from 'jspdf'
 import {
   guardarInscripcion,
   observarCupos,
@@ -13,7 +14,8 @@ import {
   actualizarCodigoEntregado,
   guardarDevolucionPiloto,
   buscarPilotoPorCodigo,
-  formatAccessCode
+  formatAccessCode,
+  eliminarInscripcion
 } from '../firebase'
 import './styles.css'
 
@@ -657,7 +659,18 @@ function LandingPage() {
 
         <div className="footerBrand">
           <span>desarrollado por</span>
-          <strong>NexoTech</strong>
+          <a
+            className="footerLogoLink"
+            href="https://www.nexotechsys.com"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Sitio web de NexoTech"
+          >
+            <img className="footerLogo" src="/assets/nexotech-logo.png" alt="NexoTech" />
+          </a>
+          <a className="footerWebsite" href="https://www.nexotechsys.com" target="_blank" rel="noreferrer">
+            www.nexotechsys.com
+          </a>
         </div>
       </footer>
     </main>
@@ -801,6 +814,235 @@ function exportarInscriptosExcel(inscriptos) {
   XLSX.writeFile(workbook, `inscriptos-bmx-academia-${fecha}.xlsx`)
 }
 
+
+const resultLabels = {
+  diagnostico: 'Diagnóstico y medición',
+  tecnica: 'Técnica en pista',
+  fisico: 'Preparación física',
+  mentalidad: 'Mentalidad competitiva',
+  nutricion: 'Nutrición / hábitos',
+  recomendaciones: 'Recomendaciones'
+}
+
+function cleanFileName(value = 'piloto') {
+  return String(value || 'piloto')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9-_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase() || 'piloto'
+}
+
+function safePdfText(value) {
+  const text = String(value ?? '').trim()
+  return text || '-'
+}
+
+function addPdfPageIfNeeded(doc, y, needed = 18) {
+  const pageHeight = doc.internal.pageSize.getHeight()
+
+  if (y + needed <= pageHeight - 18) {
+    return y
+  }
+
+  doc.addPage()
+  return 18
+}
+
+function addPdfSectionTitle(doc, title, y) {
+  y = addPdfPageIfNeeded(doc, y, 14)
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(13)
+  doc.setTextColor(227, 36, 36)
+  doc.text(title, 16, y)
+  doc.setDrawColor(227, 36, 36)
+  doc.line(16, y + 2, 194, y + 2)
+  return y + 9
+}
+
+function addPdfKeyValue(doc, label, value, y) {
+  y = addPdfPageIfNeeded(doc, y, 8)
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(9)
+  doc.setTextColor(80, 80, 80)
+  doc.text(`${label}:`, 16, y)
+
+  doc.setFont('helvetica', 'normal')
+  doc.setTextColor(20, 20, 20)
+  const lines = doc.splitTextToSize(safePdfText(value), 118)
+  doc.text(lines, 62, y)
+  return y + Math.max(7, lines.length * 5)
+}
+
+function addPdfTextBlock(doc, title, value, y) {
+  const text = safePdfText(value)
+
+  if (text === '-') {
+    return y
+  }
+
+  y = addPdfSectionTitle(doc, title, y)
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(10.5)
+  doc.setTextColor(25, 25, 25)
+
+  const lines = doc.splitTextToSize(text, 178)
+  for (const line of lines) {
+    y = addPdfPageIfNeeded(doc, y, 6)
+    doc.text(line, 16, y)
+    y += 5.6
+  }
+
+  return y + 5
+}
+
+async function imageUrlToDataUrl(url) {
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error('No se pudo descargar la foto.')
+  }
+
+  const blob = await response.blob()
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  })
+}
+
+async function descargarPdfPiloto(piloto) {
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' })
+  const pageWidth = doc.internal.pageSize.getWidth()
+  let y = 18
+
+  doc.setFillColor(8, 8, 8)
+  doc.rect(0, 0, pageWidth, 45, 'F')
+
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(18)
+  doc.setTextColor(255, 255, 255)
+  doc.text('Academia de Verano BMX 2027', 16, 18)
+
+  doc.setFontSize(10)
+  doc.setTextColor(227, 36, 36)
+  doc.text('Perfil del piloto y devolución del evento', 16, 27)
+
+  doc.setFontSize(9)
+  doc.setTextColor(210, 210, 210)
+  doc.text(`Generado: ${formatDate(Date.now())}`, 16, 36)
+
+  y = 58
+  let profileTextX = 16
+  let profileBlockBottom = y
+
+  if (piloto.fotoUrl) {
+    try {
+      const imageData = await imageUrlToDataUrl(piloto.fotoUrl)
+      const imageFormat = String(imageData).startsWith('data:image/png') ? 'PNG' : 'JPEG'
+
+      doc.setDrawColor(227, 36, 36)
+      doc.setLineWidth(0.6)
+      doc.rect(16, 54, 38, 38)
+      doc.addImage(imageData, imageFormat, 18, 56, 34, 34)
+
+      profileTextX = 62
+      profileBlockBottom = 96
+    } catch (error) {
+      console.warn('No se pudo insertar la foto en el PDF:', error)
+    }
+  }
+
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(21)
+  doc.setTextColor(20, 20, 20)
+  doc.text(safePdfText(piloto.nombre), profileTextX, y)
+  y += 8
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(10.5)
+  doc.setTextColor(90, 90, 90)
+  doc.text(`${safePdfText(piloto.categoria)} · ${safePdfText(piloto.ciudad)}`, profileTextX, y)
+
+  y = Math.max(y + 14, profileBlockBottom)
+
+  y = addPdfSectionTitle(doc, 'Datos del piloto', y)
+  const datos = [
+    ['Código de acceso', piloto.codigoAcceso],
+    ['Edad', piloto.edad],
+    ['WhatsApp', piloto.whatsapp],
+    ['Email', piloto.email],
+    ['Ciudad / Provincia', piloto.ciudad],
+    ['Categoría / nivel', piloto.categoria],
+    ['Club / equipo', piloto.club],
+    ['Fecha de registro', formatDate(piloto.fechaRegistro)],
+    ['Objetivo', piloto.objetivo]
+  ]
+
+  datos.forEach(([label, value]) => {
+    y = addPdfKeyValue(doc, label, value, y)
+  })
+
+  y += 4
+  y = addPdfTextBlock(doc, 'Devolución general', piloto.devolucion, y)
+
+  const resultados = piloto.resultados || {}
+  const hasResults = Object.values(resultados).some((value) => String(value || '').trim())
+
+  if (hasResults) {
+    y = addPdfSectionTitle(doc, 'Resultados y recomendaciones', y)
+
+    Object.entries(resultLabels).forEach(([key, label]) => {
+      const value = resultados[key]
+
+      if (!String(value || '').trim()) {
+        return
+      }
+
+      y = addPdfPageIfNeeded(doc, y, 12)
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(10.5)
+      doc.setTextColor(227, 36, 36)
+      doc.text(label, 16, y)
+      y += 6
+
+      doc.setFont('helvetica', 'normal')
+      doc.setTextColor(25, 25, 25)
+      const lines = doc.splitTextToSize(String(value), 178)
+      lines.forEach((line) => {
+        y = addPdfPageIfNeeded(doc, y, 6)
+        doc.text(line, 16, y)
+        y += 5.4
+      })
+      y += 4
+    })
+  }
+
+  if (!piloto.devolucionCargada && !hasResults) {
+    y = addPdfTextBlock(
+      doc,
+      'Devolución del evento',
+      'La devolución del evento todavía no fue cargada por la organización.',
+      y
+    )
+  }
+
+  const totalPages = doc.getNumberOfPages()
+  for (let page = 1; page <= totalPages; page += 1) {
+    doc.setPage(page)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.setTextColor(130, 130, 130)
+    doc.text('Academia de Verano BMX 2027 · NexoTech', 16, 288)
+    doc.text(`Página ${page} de ${totalPages}`, pageWidth - 36, 288)
+  }
+
+  const fileName = `devolucion-bmx-${cleanFileName(piloto.nombre)}-${cleanFileName(piloto.codigoAcceso)}.pdf`
+  doc.save(fileName)
+}
+
 function AdminPage({ onGoHome }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -817,6 +1059,7 @@ function AdminPage({ onGoHome }) {
   const [savingPaymentId, setSavingPaymentId] = useState('')
   const [savingCodeId, setSavingCodeId] = useState('')
   const [savingFeedback, setSavingFeedback] = useState(false)
+  const [deletingId, setDeletingId] = useState('')
   const [adminNotice, setAdminNotice] = useState('')
   const [feedbackForm, setFeedbackForm] = useState(emptyFeedbackForm)
 
@@ -1026,6 +1269,35 @@ function AdminPage({ onGoHome }) {
       setAdminNotice('No pudimos guardar la devolución del piloto.')
     } finally {
       setSavingFeedback(false)
+    }
+  }
+
+
+  const handleDeleteInscription = async (inscripcion) => {
+    if (!inscripcion) {
+      return
+    }
+
+    const confirmed = window.confirm(
+      `¿Eliminar definitivamente a ${inscripcion.nombre}? Esta acción eliminará sus datos de inscripciones, códigos de acceso y portal de pilotos.`
+    )
+
+    if (!confirmed) {
+      return
+    }
+
+    setDeletingId(inscripcion.id)
+    setAdminNotice('')
+
+    try {
+      await eliminarInscripcion(inscripcion)
+      setSelectedId('')
+      setAdminNotice('Piloto eliminado correctamente de Realtime Database.')
+    } catch (error) {
+      console.error('Error eliminando piloto:', error)
+      setAdminNotice('No pudimos eliminar el piloto. Revisá las reglas de Realtime Database.')
+    } finally {
+      setDeletingId('')
     }
   }
 
@@ -1307,6 +1579,15 @@ function AdminPage({ onGoHome }) {
                       Enviar por WhatsApp
                     </a>
                   )}
+
+                  <button
+                    className="adminMiniBtn danger"
+                    type="button"
+                    onClick={() => handleDeleteInscription(selectedInscription)}
+                    disabled={deletingId === selectedInscription.id}
+                  >
+                    {deletingId === selectedInscription.id ? 'Eliminando...' : 'Eliminar piloto'}
+                  </button>
                 </div>
               </div>
 
@@ -1415,6 +1696,7 @@ function PilotAccessPage({ onGoHome }) {
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState('idle')
   const [piloto, setPiloto] = useState(null)
+  const [downloadingPdf, setDownloadingPdf] = useState(false)
 
   const handleCodeChange = (event) => {
     const formatted = formatAccessCode(event.target.value)
@@ -1448,6 +1730,26 @@ function PilotAccessPage({ onGoHome }) {
       setMessage('No pudimos validar el código. Intentá nuevamente en unos minutos.')
     } finally {
       setLoading(false)
+    }
+  }
+
+
+  const handleDownloadPdf = async () => {
+    if (!piloto) {
+      return
+    }
+
+    setDownloadingPdf(true)
+    setMessage('')
+
+    try {
+      await descargarPdfPiloto(piloto)
+    } catch (error) {
+      console.error('Error generando PDF del piloto:', error)
+      setStatus('error')
+      setMessage('No pudimos generar el PDF. Intentá nuevamente en unos minutos.')
+    } finally {
+      setDownloadingPdf(false)
     }
   }
 
@@ -1514,6 +1816,17 @@ function PilotAccessPage({ onGoHome }) {
                 <h2>{piloto.nombre}</h2>
                 <p>{piloto.categoria || 'Sin categoría'} · {piloto.ciudad || 'Sin ciudad'}</p>
               </div>
+            </div>
+
+            <div className="portalActions">
+              <button
+                className="adminMiniBtn export"
+                type="button"
+                onClick={handleDownloadPdf}
+                disabled={downloadingPdf}
+              >
+                {downloadingPdf ? 'Generando PDF...' : 'Descargar PDF'}
+              </button>
             </div>
 
             <div className="pilotDataGrid portalData">

@@ -854,23 +854,52 @@ textarea { resize: vertical; }
 }
 
 .footerEvent,
-.footerBrand { display: grid; gap: 6px; }
-
-.footerEvent strong,
-.footerBrand strong {
-  font-family: 'Black Ops One', system-ui;
-  text-transform: lowercase;
-  color: #ffffff;
+/* Footer NexoTech */
+.footerBrand {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
 }
 
-.footerEvent span,
-.footerBrand span {
+.footerBrand > span {
+  margin: 0;
+  line-height: 1;
+}
+
+.footerLogoLink {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 180px;
+  height: 42px;
+  overflow: hidden;
+  margin: 0;
+}
+
+.footerLogo {
+  display: block;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  margin: 0;
+}
+
+.footerWebsite {
+  display: block;
+  margin: 0;
+  line-height: 1;
   color: var(--muted);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.footerBrand { text-align: right; }
+.footerWebsite:hover {
+  color: #ffffff;
+}
 
 .footerBrand strong {
   color: var(--red);
@@ -1843,6 +1872,68 @@ select:focus {
 @media (max-width: 620px) {
   .adminHeaderActions,
   .adminHeaderActions .adminMiniBtn {
+    width: 100%;
+  }
+}
+
+
+/* Footer NexoTech */
+.footerLogoLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.footerLogo {
+  display: block;
+  width: 170px;
+  height: auto;
+  margin: 0;
+}
+
+.footerWebsite {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.footerWebsite:hover {
+  color: #ffffff;
+}
+
+.adminMiniBtn.danger {
+  background: rgba(227, 36, 36, 0.14);
+  border-color: rgba(227, 36, 36, 0.46);
+}
+
+.adminMiniBtn.danger:hover {
+  background: rgba(227, 36, 36, 0.24);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.portalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 24px 0;
+}
+
+.portalActions .adminMiniBtn {
+  min-width: 180px;
+}
+
+@media (max-width: 620px) {
+  .footerLogoLink {
+    justify-content: flex-start;
+  }
+
+  .footerLogo {
+    width: min(190px, 70vw);
+  }
+
+  .portalActions,
+  .portalActions .adminMiniBtn {
     width: 100%;
   }
 }

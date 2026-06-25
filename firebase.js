@@ -15,7 +15,7 @@ import {
   signOut,
   onAuthStateChanged
 } from 'firebase/auth'
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC6yN-FdiRYS9C2RMsj6Guv3KRG1W5yipU',
@@ -104,6 +104,8 @@ function buildPortalPayload(inscripcion, overrides = {}) {
     categoria: inscripcion.categoria || '',
     club: inscripcion.club || '',
     objetivo: inscripcion.objetivo || '',
+    numeroCupo: inscripcion.numeroCupo || '',
+    maxCupos: inscripcion.maxCupos || MAX_CUPOS,
     fotoUrl: inscripcion.fotoUrl || '',
     devolucion: overrides.devolucion ?? inscripcion.devolucion ?? '',
     devolucionCargada: Boolean(overrides.devolucionCargada ?? inscripcion.devolucionCargada),
@@ -339,6 +341,39 @@ export async function guardarDevolucionPiloto(inscripcion, payload) {
     [`inscripciones/${inscripcion.id}/updatedAt`]: serverTimestamp(),
     [`portalPilotos/${inscripcion.codigoAcceso}`]: portalPayload
   })
+}
+
+
+export async function eliminarInscripcion(inscripcion) {
+  if (!inscripcion?.id) {
+    throw new Error('No se encontró la inscripción para eliminar.')
+  }
+
+  const updates = {
+    [`inscripciones/${inscripcion.id}`]: null
+  }
+
+  if (inscripcion.codigoAcceso) {
+    updates[`codigosAcceso/${inscripcion.codigoAcceso}`] = null
+    updates[`portalPilotos/${inscripcion.codigoAcceso}`] = null
+  }
+
+  await update(dbRef(database), updates)
+
+  await runTransaction(dbRef(database, 'cupos/ocupados'), (currentValue) => {
+    const ocupados = Number(currentValue || 0)
+    return Math.max(ocupados - 1, 0)
+  })
+
+  if (inscripcion.fotoPath) {
+    try {
+      await deleteObject(storageRef(storage, inscripcion.fotoPath))
+    } catch (error) {
+      console.warn('No se pudo eliminar la foto del piloto en Storage:', error)
+    }
+  }
+
+  return true
 }
 
 export async function buscarPilotoPorCodigo(rawCode) {
