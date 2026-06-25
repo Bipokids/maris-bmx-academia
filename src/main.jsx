@@ -671,6 +671,9 @@ function LandingPage() {
           <a className="footerWebsite" href="https://www.nexotechsys.com" target="_blank" rel="noreferrer">
             www.nexotechsys.com
           </a>
+          <a className="footerWebsite">
+            (+54) 11-7829-7199
+          </a>
         </div>
       </footer>
     </main>
