@@ -486,9 +486,9 @@ function LandingPage() {
           </h2>
 
           <p>
-            Completá tus datos, cargá la foto del piloto y te abrimos WhatsApp
-            con el mensaje listo para pedir el PDF informativo. El acceso privado
-            se habilitará más adelante cuando la organización confirme el pago.
+            Completá tus datos, cargá tu foto de perfil y envianos un WhatsApp
+            solicitando el PDF informativo. Una vez registrado
+            el organizador te enviará tu codigo privado de acceso.
           </p>
 
           <div className="qrBox">
