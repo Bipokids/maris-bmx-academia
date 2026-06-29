@@ -994,37 +994,51 @@ textarea { resize: vertical; }
 }
 
 .footerEvent,
+/* Footer NexoTech */
 .footerBrand {
   text-align: right;
-  display: grid;
-  justify-items: end;
-  align-content: center;
-  gap: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
 }
 
-.footerEvent strong,
-.footerBrand strong {
-  font-family: 'Black Ops One', system-ui;
-  text-transform: lowercase;
-  color: #ffffff;
+.footerBrand > span {
+  margin: 0;
+  line-height: 1;
 }
 
-.footerEvent span,
-.footerBrand span {
+.footerLogoLink {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 180px;
+  height: 42px;
+  overflow: hidden;
+  margin: 0;
+}
+
+.footerLogo {
+  display: block;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  margin: 0;
+}
+
+.footerWebsite {
+  display: block;
+  margin: 0;
+  line-height: 1;
   color: var(--muted);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.footerBrand { text-align: right; }
-
-.footerBrand strong {
-  color: var(--red);
-  font-size: 1.3rem;
-  letter-spacing: 0.02em;
-  text-shadow:
-    0 3px 0 rgba(0,0,0,0.45),
-    0 0 22px rgba(227,36,36,0.25);
+.footerWebsite:hover {
+  color: #ffffff;
 }
 
 @media (max-width: 920px) {

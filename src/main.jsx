@@ -77,7 +77,7 @@ const sponsors = [
     name: 'Dino Racing',
     logo: '/assets/sponsors/dino-racing-logo.png',
     website: 'https://dinoracing.mitiendanube.com/',
-    displayUrl: 'www.dinoracing.mitiendanube.com',
+    displayUrl: 'www.dinoracing.com',
     className: 'dino'
   }
 ]
