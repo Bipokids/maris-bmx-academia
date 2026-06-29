@@ -326,6 +326,7 @@ main { overflow: hidden; }
 .experience,
 .program,
 .inscription,
+.sponsors,
 .stats,
 .pillars {
   width: min(1180px, calc(100% - 32px));
@@ -696,6 +697,145 @@ footer span {
 
 .timelineItem p { margin: 0; font-weight: 700; }
 
+
+/* AUSPICIANTES */
+.sponsors {
+  display: grid;
+  gap: 26px;
+  padding: 0 0 88px;
+}
+
+.sponsorsHeader {
+  display: grid;
+  gap: 12px;
+  max-width: 820px;
+}
+
+.sponsorsHeader h2 {
+  margin: 0;
+  font-family: 'Black Ops One', system-ui;
+  font-size: clamp(2.2rem, 5.1vw, 5.2rem);
+  line-height: 1.03;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+  color: #ffffff;
+  text-shadow:
+    0 5px 0 rgba(0,0,0,0.5),
+    0 0 32px rgba(227, 36, 36, 0.16);
+}
+
+.sponsorGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.sponsorCard {
+  position: relative;
+  min-height: 260px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: 0 22px 64px rgba(0,0,0,0.22);
+  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+.sponsorCard::before {
+  content: '';
+  position: absolute;
+  inset: -80px -80px auto auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(227,36,36,0.22), transparent 68%);
+  pointer-events: none;
+}
+
+.sponsorCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(227, 36, 36, 0.62);
+  background:
+    linear-gradient(145deg, rgba(227,36,36,0.10), rgba(255,255,255,0.035)),
+    rgba(255, 255, 255, 0.045);
+}
+
+.sponsorLogoFrame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 128px;
+  min-height: 128px;
+  display: grid;
+  place-items: center;
+  padding: 16px 24px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(255,255,255,0.18);
+  overflow: hidden;
+}
+
+.sponsorLogoFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+}
+
+.sponsorCard.machine .sponsorLogoFrame img {
+  transform: scale(1.40);
+}
+
+.sponsorCard.vicente .sponsorLogoFrame img {
+  transform: scale(1);
+}
+
+.sponsorCard.dino .sponsorLogoFrame img {
+  transform: scale(1.20);
+  transform-origin: center center;
+}
+
+.sponsorCard strong {
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  font-family: 'Black Ops One', system-ui;
+  font-size: 1.15rem;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+.sponsorCard span {
+  position: relative;
+  z-index: 1;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  word-break: break-word;
+}
+
+@media (max-width: 920px) {
+  .sponsorGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sponsorCard {
+    min-height: 230px;
+  }
+}
+
 .inscription {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
@@ -854,52 +994,29 @@ textarea { resize: vertical; }
 }
 
 .footerEvent,
-/* Footer NexoTech */
 .footerBrand {
   text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 5px;
+  display: grid;
+  justify-items: end;
+  align-content: center;
+  gap: 0px;
 }
 
-.footerBrand > span {
-  margin: 0;
-  line-height: 1;
-}
-
-.footerLogoLink {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 180px;
-  height: 42px;
-  overflow: hidden;
-  margin: 0;
-}
-
-.footerLogo {
-  display: block;
-  width: 180px;
-  height: 180px;
-  object-fit: cover;
-  object-position: center;
-  margin: 0;
-}
-
-.footerWebsite {
-  display: block;
-  margin: 0;
-  line-height: 1;
-  color: var(--muted);
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.footerWebsite:hover {
+.footerEvent strong,
+.footerBrand strong {
+  font-family: 'Black Ops One', system-ui;
+  text-transform: lowercase;
   color: #ffffff;
 }
+
+.footerEvent span,
+.footerBrand span {
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.footerBrand { text-align: right; }
 
 .footerBrand strong {
   color: var(--red);
@@ -970,6 +1087,7 @@ textarea { resize: vertical; }
   .experience,
   .program,
   .inscription,
+  .sponsors,
   .stats,
   .pillars,
   .siteFooter {

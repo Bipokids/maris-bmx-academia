@@ -58,6 +58,30 @@ const schedule = [
   'Cierre, medición final y plan de evolución'
 ]
 
+const sponsors = [
+  {
+    name: 'The Machine Racewear',
+    logo: '/assets/sponsors/machine-racewear-logo.png',
+    website: 'https://www.themachineracing.com',
+    displayUrl: 'www.themachineracing.com',
+    className: 'machine'
+  },
+  {
+    name: 'Vivamos Vicente López',
+    logo: '/assets/sponsors/vicente-lopez-logo.png',
+    website: 'https://www.vicentelopez.gov.ar',
+    displayUrl: 'www.vicentelopez.gov.ar',
+    className: 'vicente'
+  },
+  {
+    name: 'Dino Racing',
+    logo: '/assets/sponsors/dino-racing-logo.png',
+    website: 'https://dinoracing.mitiendanube.com/',
+    displayUrl: 'www.dinoracing.mitiendanube.com',
+    className: 'dino'
+  }
+]
+
 const initialForm = {
   nombre: '',
   edad: '',
@@ -342,6 +366,7 @@ function LandingPage() {
         <div className="navLinks">
           <a href="#experiencia">Experiencia</a>
           <a href="#programa">Programa</a>
+          <a href="#auspician">Auspician</a>
           <a href="#inscripcion">Inscripción</a>
           <a href="/acceso">Acceso piloto</a>
         </div>
@@ -473,6 +498,33 @@ function LandingPage() {
               <span>Día {index + 1}</span>
               <p>{item}</p>
             </div>
+          ))}
+        </div>
+      </section>
+
+
+      <section className="sponsors" id="auspician">
+        <div className="sponsorsHeader">
+          <p className="sectionTag">Auspician</p>
+          <h2>marcas e instituciones que acompañan</h2>
+        </div>
+
+        <div className="sponsorGrid">
+          {sponsors.map((sponsor) => (
+            <a
+              className={`sponsorCard ${sponsor.className}`}
+              href={sponsor.website}
+              target="_blank"
+              rel="noreferrer"
+              key={sponsor.name}
+              aria-label={`Visitar ${sponsor.name}`}
+            >
+              <div className="sponsorLogoFrame">
+                <img src={sponsor.logo} alt={sponsor.name} />
+              </div>
+              <strong>{sponsor.name}</strong>
+              <span>{sponsor.displayUrl}</span>
+            </a>
           ))}
         </div>
       </section>
